@@ -1,50 +1,69 @@
+```python
 import os, json, hashlib
 from datetime import datetime
 
 def capitalize_first(s: str) -> str:
+    """Capitalize the first character of a string."""
     return s and s[0].upper() + s[1:]
 
 def reverse_string(s: str) -> str:
+    """Reverse the characters of a string."""
     return s[::-1]
 
 def read_json(f: str) -> dict:
-    with open(f, 'r') as _f: return json.load(_f)
+    """Read a JSON file and return its contents as a dictionary."""
+    with open(f, 'r') as _f:
+        return json.load(_f)
 
 def write_json(f: str, c: dict):
-    with open(f, 'w') as _f: json.dump(c, _f)
+    """Write a dictionary to a file in JSON format."""
+    with open(f, 'w') as _f:
+        json.dump(c, _f)
 
 def checksum(f: str, a: str = 'sha256') -> str:
+    """Calculate the checksum of a file using a specified algorithm (default SHA256)."""
     h = hashlib.new(a)
     with open(f, 'rb') as _f:
         for chunk in iter(lambda: _f.read(4096), b""): h.update(chunk)
     return h.hexdigest()
 
 def date_str(f: str = "%Y-%m-%d") -> str:
+    """Return current date as a string formatted according to the given format string."""
     return datetime.now().strftime(f)
 
 def days_diff(d1: datetime, d2: datetime) -> int:
+    """Calculate the number of days between two datetime objects."""
     return (d2 - d1).days
 
 def create_dir(p: str):
-    if not os.path.exists(p): os.makedirs(p)
+    """Create a directory at the specified path if it doesn't already exist."""
+    if not os.path.exists(p):
+        os.makedirs(p)
 
 def factorial(n: int) -> int:
+    """Calculate the factorial of a non-negative integer."""
     return 1 if n == 0 else n * factorial(n-1)
 
 def is_prime(num: int) -> bool:
-    if num <= 1: return False
+    """Check if a number is prime."""
+    if num <= 1:
+        return False
     for i in range(2, int(num**0.5) + 1):
-        if num % i == 0: return False
+        if num % i == 0:
+            return False
     return True
 
 def merge_sort(lst):
-    if len(lst) <= 1: return lst
+    """Sort a list using the merge sort algorithm."""
+    if len(lst) <= 1:
+        return lst
     mid = len(lst) // 2
     left = merge_sort(lst[:mid])
     right = merge_sort(lst[mid:])
     return merge(left, right)
 
 def merge(left, right):
+    """Merge two sorted lists into one sorted list."""
     result, i, j = [], 0, 0
     while i < len(left) and j < len(right):
         if left[i] < right[j]:
@@ -58,12 +77,16 @@ def merge(left, right):
     return result
 
 def fibonacci_memo(n, memo={}):
-    if n in memo: return memo[n]
-    if n <= 2: return 1
+    """Calculate the nth Fibonacci number using memoization to improve performance."""
+    if n in memo:
+        return memo[n]
+    if n <= 2:
+        return 1
     memo[n] = fibonacci_memo(n-1, memo) + fibonacci_memo(n-2, memo)
     return memo[n]
 
 def find_longest_substring(s):
+    """Find the longest substring without repeating characters."""
     used = {}
     start, maxlen, substr_start = 0, 0, 0
     for i, c in enumerate(s):
@@ -77,6 +100,7 @@ def find_longest_substring(s):
     return s[substr_start:substr_start + maxlen]
 
 def rle_encode(s):
+    """Encode a string using Run-Length Encoding."""
     count, last, result = 1, s[0], ''
     for char in s[1:]:
         if char == last:
@@ -89,6 +113,7 @@ def rle_encode(s):
     return result
 
 def rle_decode(s):
+    """Decode a Run-Length Encoded string."""
     result, i = '', 0
     while i < len(s):
         char = s[i]
@@ -101,4 +126,6 @@ def rle_decode(s):
     return result
 
 if __name__ == "__main__":
+    # Example use of capitalize_first function.
     print(capitalize_first("hello"))
+```
